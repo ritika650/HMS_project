@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace | MediCare HMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+  <div class="d-flex" id="dashboardLayout">
+    <aside class="sidebar p-3">
+      <a class="sidebar-brand text-decoration-none" href="role-dashboard.html"><span class="brand-mark">M+</span><span>MediCare HMS</span></a>
+      <div class="sidebar-label mt-4">WORKSPACE</div>
+      <nav class="nav flex-column gap-1" id="roleNavigation"></nav>
+      <div class="mt-auto pt-4"><button class="btn btn-outline-danger w-100 text-start" onclick="logout()">Logout</button></div>
+    </aside>
+    <main class="flex-grow-1 p-4">
+      <header class="d-flex justify-content-between align-items-center mb-4"><div><h2 class="fw-bold mb-1" id="roleTitle">Workspace</h2><p class="text-secondary mb-0">Role-specific hospital operations</p></div><span class="badge text-bg-light px-3 py-2" id="roleBadge"></span></header>
+      <section class="content-card"><h5 class="fw-bold">Available operations</h5><div class="row g-3 mt-1" id="roleCards"></div></section>
+    </main>
+  </div>
+  <script src="js/app.js"></script>
+  <script>
+    const currentUser = requireLogin();
+    const roleModules = {
+      Doctor: ["Appointments", "Patients", "Consultations", "Medical Records", "Prescriptions", "Lab Orders", "Lab Tests"],
+      Receptionist: ["Patients", "Appointments", "Admissions", "Billing"],
+      Pharmacist: ["Medicines", "Inventory", "Prescriptions", "Dispensing"],
+      "Lab Technician": ["Lab Orders", "Pending Tests", "Results"]
+    };
+    if (currentUser) {
+      document.getElementById("roleTitle").textContent = `${currentUser.role} Workspace`;
+      document.getElementById("roleBadge").textContent = currentUser.role;
+      const modules = roleModules[currentUser.role] || [];
+      const cards = document.getElementById("roleCards");
+      modules.forEach(module => {
+        const column = document.createElement("div");
+        column.className = "col-md-6 col-xl-4";
+        const key = module.toLowerCase().replaceAll(" ", "-").replace("and-results", "orders");
+        column.innerHTML = `<a class="border rounded p-3 h-100 d-block text-decoration-none" href="operations.html?module=${key}"><h6 class="fw-bold mb-1"></h6><small class="text-secondary">Open module workspace</small></a>`;
+        column.querySelector("h6").textContent = module;
+        cards.appendChild(column);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations | MediCare HMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+  <div class="d-flex" id="dashboardLayout">
+    <aside class="sidebar p-3">
+      <a class="sidebar-brand text-decoration-none" href="admin-dashboard.html"><span class="brand-mark">M+</span><span>MediCare HMS</span></a>
+      <div class="sidebar-label mt-4">OPERATIONS</div>
+      <nav class="nav flex-column gap-1" id="operationsNav"></nav>
+      <div class="mt-auto pt-4"><button class="btn btn-outline-danger w-100 text-start" onclick="logout()">Logout</button></div>
+    </aside>
+    <main class="flex-grow-1 p-4">
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div><h2 class="fw-bold mb-1" id="operationsTitle">Operations</h2><p class="text-secondary mb-0">Manage live hospital records</p></div>
+        <span class="badge text-bg-light px-3 py-2" id="operationsRole"></span>
+      </header>
+      <div id="operationsMessage" class="alert d-none"></div>
+      <section class="content-card mb-4"><div class="row g-3 align-items-end"><div class="col-md-8"><label class="form-label fw-semibold" for="operationsSearch">Search records</label><input class="form-control" id="operationsSearch" placeholder="Search current module"></div><div class="col-md-4"><button class="btn btn-outline-primary w-100" id="refreshOperations">Refresh</button></div></div></section>
+      <section class="content-card mb-4"><div class="d-flex justify-content-between align-items-center mb-3"><div><h5 class="fw-bold mb-1" id="recordsHeading">Records</h5><small class="text-secondary" id="recordsCount"></small></div><button class="btn btn-primary" id="newRecordButton">New record</button></div><div class="table-responsive"><table class="table table-hover align-middle"><thead id="recordsHead"></thead><tbody id="recordsBody"></tbody></table></div></section>
+      <section class="content-card d-none" id="recordFormCard"><h5 class="fw-bold mb-3" id="recordFormTitle">New record</h5><form id="recordForm"><div class="row g-3" id="recordFields"></div><div class="d-flex gap-2 mt-4"><button class="btn btn-primary" type="submit">Save record</button><button class="btn btn-outline-secondary" type="button" id="cancelRecord">Cancel</button></div></form></section>
+    </main>
+  </div>
+  <script src="js/app.js"></script>
+  <script src="js/operations.js"></script>
+</body>
+</html>

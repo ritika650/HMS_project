@@ -20,17 +20,17 @@
       <nav class="nav flex-column gap-1">
         <a class="nav-link active" href="#">Dashboard</a>
        <a class="nav-link" href="patients.html">Patients</a>
-        <a class="nav-link" href="#">Doctors</a>
-        <a class="nav-link" href="#">Departments</a>
-        <a class="nav-link" href="#">Appointments</a>
+        <a class="nav-link" href="operations.html?module=doctors">Doctors</a>
+          <a class="nav-link" href="operations.html?module=departments">Departments</a>
+         <a class="nav-link" href="operations.html?module=appointments">Appointments</a>
       </nav>
 
       <div class="sidebar-label mt-4">OPERATIONS</div>
       <nav class="nav flex-column gap-1">
-        <a class="nav-link" href="#">Admissions</a>
-        <a class="nav-link" href="#">Pharmacy</a>
-        <a class="nav-link" href="#">Laboratory</a>
-        <a class="nav-link" href="#">Billing</a>
+        <a class="nav-link" href="operations.html?module=admissions">Admissions</a>
+        <a class="nav-link" href="operations.html?module=medicines">Pharmacy</a>
+        <a class="nav-link" href="operations.html?module=lab-orders">Laboratory</a>
+        <a class="nav-link" href="operations.html?module=bills">Billing</a>
         <a class="nav-link" href="#">Reports</a>
       </nav>
 
@@ -56,32 +56,32 @@
 
       <main class="p-4">
         <div class="alert alert-primary border-0">
-          <strong>Welcome, Admin.</strong> Dashboard values will be loaded from MySQL after backend integration.
+          <strong>Welcome, Admin.</strong> Live hospital activity from MySQL.
         </div>
 
         <div class="row g-4 mb-4">
           <div class="col-sm-6 col-xl-3">
             <div class="stat-card">
               <div class="stat-icon">👥</div>
-              <div><small>Total Patients</small><h3>—</h3><span>From database</span></div>
+              <div><small>Total Patients</small><h3 data-stat="activePatients">...</h3><span>Active records</span></div>
             </div>
           </div>
           <div class="col-sm-6 col-xl-3">
             <div class="stat-card">
               <div class="stat-icon">🩺</div>
-              <div><small>Doctors</small><h3>—</h3><span>From database</span></div>
+              <div><small>Doctors</small><h3 data-stat="doctors">...</h3><span>Active records</span></div>
             </div>
           </div>
           <div class="col-sm-6 col-xl-3">
             <div class="stat-card">
               <div class="stat-icon">📅</div>
-              <div><small>Today's Appointments</small><h3>—</h3><span>From database</span></div>
+              <div><small>Today's Appointments</small><h3 data-stat="todaysAppointments">...</h3><span>Scheduled today</span></div>
             </div>
           </div>
           <div class="col-sm-6 col-xl-3">
             <div class="stat-card">
               <div class="stat-icon">🛏️</div>
-              <div><small>Available Beds</small><h3>—</h3><span>From database</span></div>
+              <div><small>Available Beds</small><h3 data-stat="availableBeds">...</h3><span>Ready for admission</span></div>
             </div>
           </div>
         </div>
@@ -107,11 +107,9 @@
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="dashboardAppointments">
                     <tr>
-                      <td colspan="4" class="text-center text-secondary py-4">
-                        Appointment data will appear here after API integration.
-                      </td>
+                      <td colspan="4" class="text-center text-secondary py-4">Loading appointments...</td>
                     </tr>
                   </tbody>
                 </table>
@@ -128,9 +126,9 @@
         onclick="window.location.href='patients.html?register=true'">
     + Register Patient
 </button>
-                <button class="btn btn-primary w-100">+ Add Appointment</button>
-                <button class="btn btn-primary w-100">+ Add Doctor</button>
-                <button class="btn btn-primary w-100">+ Create Bill</button>
+                <button class="btn btn-primary w-100" onclick="window.location.href='operations.html?module=appointments'">+ Add Appointment</button>
+                <button class="btn btn-primary w-100" onclick="window.location.href='operations.html?module=doctors'">+ Add Doctor</button>
+                <button class="btn btn-primary w-100" onclick="window.location.href='operations.html?module=bills'">+ Create Bill</button>
               </div>
             </div>
           </div>

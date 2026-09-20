@@ -45,15 +45,9 @@ if (loginForm) {
             loginMessage.textContent = "Login successful! Redirecting...";
 
             // Redirect according to role
-            if (data.user.role === "Admin") {
-                window.location.href = "admin-dashboard.html";
-            } else {
-                loginMessage.className = "alert alert-warning mt-3";
-                loginMessage.textContent =
-                    "Login successful. Dashboard for " +
-                    data.user.role +
-                    " will be connected later.";
-            }
+            window.location.href = data.user.role === "Admin"
+                ? "admin-dashboard.html"
+                : "role-dashboard.html";
 
         } catch (error) {
             console.error("Login error:", error);
@@ -667,3 +661,47 @@ async function viewPatient(patientId) {
         alert("Unable to load patient details.");
     }
 }
+
+async function loadDashboard() {
+    const statsContainer = document.getElementById("dashboardStats");
+    const appointmentsBody = document.getElementById("dashboardAppointments");
+    if (!statsContainer || !appointmentsBody) return;
+
+    try {
+        const response = await fetchWithAuth("http://localhost:5000/api/dashboard");
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Failed to load dashboard");
+
+        const stats = data.stats;
+        const values = {
+            activePatients: stats.active_patients,
+            doctors: stats.doctors,
+            todaysAppointments: stats.todays_appointments,
+            availableBeds: stats.available_beds
+        };
+        Object.entries(values).forEach(([key, value]) => {
+            const element = document.querySelector(`[data-stat="${key}"]`);
+            if (element) element.textContent = value;
+        });
+
+        appointmentsBody.innerHTML = "";
+        if (!data.appointments.length) {
+            appointmentsBody.innerHTML = `<tr><td colspan="4" class="text-center text-secondary py-4">No appointments found.</td></tr>`;
+            return;
+        }
+        data.appointments.forEach(appointment => {
+            const row = document.createElement("tr");
+            [appointment.patient_name, appointment.doctor_name, appointment.appointment_date, appointment.status].forEach(value => {
+                const cell = document.createElement("td");
+                cell.textContent = value || "-";
+                row.appendChild(cell);
+            });
+            appointmentsBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error("Dashboard error:", error);
+        appointmentsBody.innerHTML = `<tr><td colspan="4" class="text-center text-danger py-4">Unable to load dashboard data.</td></tr>`;
+    }
+}
+
+loadDashboard();
