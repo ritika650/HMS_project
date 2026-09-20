@@ -663,7 +663,7 @@ async function viewPatient(patientId) {
 }
 
 async function loadDashboard() {
-    const statsContainer = document.getElementById("dashboardStats");
+    const statsContainer = document.querySelector("[data-stat]");
     const appointmentsBody = document.getElementById("dashboardAppointments");
     if (!statsContainer || !appointmentsBody) return;
 
